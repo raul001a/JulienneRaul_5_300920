@@ -10,8 +10,9 @@
 
     <link rel="stylesheet" href="css/style.css" />
 
-    <script src="https://kit.fontawesome.com/18b7f90565.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" type="image/png" href="images/caddie.png">
+
+    <script src="JS/produit.js" defer></script>
 
     <title>Orinoco</title>
 </head>
@@ -49,8 +50,52 @@
 
     <main>
 
-        <!--detail du produit-->
+        <!--detail du produit / test-->
+
         <section class="container-fluid bg-beige text-dark">
+
+            <p>Test</p>
+
+            <div class="row py-3  ">
+
+                <div class="card-group justify-content-around">
+                    <div class="col">
+                        <div class="card my-2 bg-beige shadow-lg  ">
+                            <div class="row no-gutter">
+                                <div class="col-md-5 ">
+                                    <img class="card-img cover" id="productImage" alt="photo d'appareil photo">
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="card-body ">
+                                        <div class="card-title d-flex justify-content-between">
+                                            <h2 id="productName"></h2>
+                                            <div class="badge badge-success align-self-center"> <p class="h5 px-3" id="productPrice"></p></div>
+                                        </div>
+                                        <p class="card-text" id="productDescription"></p>
+
+                                        <div class="form-group ">
+                                            <label for="lenses">Choisissez le type de lentille :</label>
+                                            <select id="lenses" name="lenses" class="form-control btn-success">
+                                                
+                                            </select>
+                                        </div>
+                                        <div class="text-center">
+                                            <a href="#" role="button" class="btn btn-success my-3 p-3 ">Ajouter au panier</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!--detail du produit Maquette-->
+        <section class="container-fluid bg-beige text-dark">
+
+            <p>Maquette</p>
 
             <div class="row py-3  ">
 
@@ -68,17 +113,13 @@
                                             <div class="badge badge-success align-self-center"> <p class="h5 px-3 ">499 euros</p></div>
                                         </div>
                                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
-                                        <div class="d-flex flex-row border ">
-                                            <button class="btn btn-success dropdown-toggle my-3 border  " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Type de lentilles
-                                            </button>
-                                            <div class="dropdown-menu bg-beige text-dark">
-                                                <span class="dropdown-item-text"></span>
-                                                <a class="dropdown-item " href="#">50mm 1.4</a>
-                                                <a class="dropdown-item" href="#">35mm 1.8</a>
-                                                <a class="dropdown-item" href="#">28-200mm 2.8/4.5</a>
-                                            </div>
-                                            <div class="border "> <p>28-200mm 2.8/4.5</p> </div>
+
+                                        <div class="form-group ">
+                                            <label for="lenses">Choisissez le type de lentille :</label>
+                                            <select id="lenses" name="lenses" class="form-control btn-success">
+                                                <option value="0">35mm 1.4</option>
+                                                <option value="1">50mm 1.6</option>
+                                            </select>
                                         </div>
                                         <div class="text-center">
                                             <a href="#" role="button" class="btn btn-success my-3 p-3 ">Ajouter au panier</a>
@@ -96,24 +137,7 @@
     <!--footer-->
     <footer class="bg-success ">
         <div class="container">
-            <div class="row ">
-                <div class="col-sm-4 pt-4 pb-2">
-                    <div class="text-center  ">
-                        <a class="h3 text-dark" href="#"><span class="fa fa-twitter"></span></a>
-                    </div>
-                </div>
-                <div class="col-sm-4 pt-4 pb-2">
-                    <div class="text-center">
-                        <a class="h3 text-dark" href="#"><span class="fa fa-facebook"></span></a>
-                    </div>
-                </div>
-                <div class="col-sm-4 pt-4 pb-2">
-                    <div class="text-center">
-                        <a class="h3 text-dark" href="#"><span class="fa fa-instagram "></span></a>
-                    </div>
-                </div>
-
-            </div>
+            
             <div class="row pt-4 pb-3">
                 <div class="col">
                     <ul class="list-inline text-center ">
@@ -128,15 +152,6 @@
 
 
 
-    <!--  JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    
-            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
    
-
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
 </body>
 </html>
