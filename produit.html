@@ -50,89 +50,101 @@
 
     <main>
 
+        <!--message d'alerte confirmation ajout au panier-->
+        <section class="container-fluid bg-beige d-none" id="basketalert">
+            <div class="row justify-content-center ">
+                <div class="alert alert-success alert-dismissible text-center col-10 col-sm-8 col-md-4 col-lg-3 bg-success " role="alert">
+                    <h4 class="alert-heading">Merci !</h4>
+                    <p>Le produit a bien été rajouté au panier</p>
+                    <a href="panier.html" class="alert-link">Voir votre panier</a>
+                    <button type="button" class="close" id="closealert">
+                        <span>&times;</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
         <!--detail du produit / test-->
 
-        <section class="container-fluid bg-beige text-dark">
-
-            <p>Test</p>
+        <section class="container-fluid bg-beige text-dark" id="productdetail">
 
             <div class="row py-3  ">
+                <div class="col">
+                    <div class="card my-2 bg-beige shadow-sm  ">
+                        <div class="row no-gutter">
+                            <div class="col-md-5 ">
+                                <img class="card-img cover" id="productImage" alt="photo d'appareil photo">
+                            </div>
+                            <div class="col-md-7">
+                                <div class="card-body ">
+                                    <div class="card-title d-flex justify-content-between">
+                                        <h2 id="productName"></h2>
+                                        <div class="badge badge-success align-self-center"> <p class="h5 px-3" id="productPrice"></p></div>
+                                    </div>
+                                    <p class="card-text" id="productDescription"></p>
 
-                <div class="card-group justify-content-around">
-                    <div class="col">
-                        <div class="card my-2 bg-beige shadow-lg  ">
-                            <div class="row no-gutter">
-                                <div class="col-md-5 ">
-                                    <img class="card-img cover" id="productImage" alt="photo d'appareil photo">
-                                </div>
-                                <div class="col-md-7">
-                                    <div class="card-body ">
-                                        <div class="card-title d-flex justify-content-between">
-                                            <h2 id="productName"></h2>
-                                            <div class="badge badge-success align-self-center"> <p class="h5 px-3" id="productPrice"></p></div>
-                                        </div>
-                                        <p class="card-text" id="productDescription"></p>
-
-                                        <div class="form-group ">
-                                            <label for="lenses">Choisissez le type de lentille :</label>
-                                            <select id="lenses" name="lenses" class="form-control btn-success">
-                                                
-                                            </select>
-                                        </div>
-                                        <div class="text-center">
-                                            <a href="#" role="button" class="btn btn-success my-3 p-3 ">Ajouter au panier</a>
-                                        </div>
+                                    <div class="form-group ">
+                                        <label for="lenses">Choisissez le type de lentille :</label>
+                                        <select id="lenses" name="lenses" class="form-control btn-success">
+                                        </select>
+                                    </div>
+                                    <div class="text-center">
+                                        <a href="#" role="button" class="btn btn-success my-3 p-3" id="addToBasketBtn">Ajouter au panier</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
 
-        <!--detail du produit Maquette-->
-        <section class="container-fluid bg-beige text-dark">
 
-            <p>Maquette</p>
 
-            <div class="row py-3  ">
+        <!--
 
-                <div class="card-group justify-content-around">
-                    <div class="col">
-                        <div class="card my-2 bg-beige shadow-sm  ">
-                            <div class="row no-gutter">
-                                <div class="col-md-5 ">
-                                    <img class="card-img cover " src="images/vcam_2.jpg" alt="photo d'appareil photo">
-                                </div>
-                                <div class="col-md-7">
-                                    <div class="card-body ">
-                                        <div class="card-title d-flex justify-content-between">
-                                            <h2>Zurss 50S </h2>
-                                            <div class="badge badge-success align-self-center"> <p class="h5 px-3 ">499 euros</p></div>
-                                        </div>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+    <section class="container-fluid bg-beige text-dark">
 
-                                        <div class="form-group ">
-                                            <label for="lenses">Choisissez le type de lentille :</label>
-                                            <select id="lenses" name="lenses" class="form-control btn-success">
-                                                <option value="0">35mm 1.4</option>
-                                                <option value="1">50mm 1.6</option>
-                                            </select>
-                                        </div>
-                                        <div class="text-center">
-                                            <a href="#" role="button" class="btn btn-success my-3 p-3 ">Ajouter au panier</a>
-                                        </div>
+        <p>Maquette</p>
+
+        <div class="row py-3  ">
+
+            <div class="card-group justify-content-around">
+                <div class="col">
+                    <div class="card my-2 bg-beige shadow-sm  ">
+                        <div class="row no-gutter">
+                            <div class="col-md-5 ">
+                                <img class="card-img cover " src="images/vcam_2.jpg" alt="photo d'appareil photo">
+                            </div>
+                            <div class="col-md-7">
+                                <div class="card-body ">
+                                    <div class="card-title d-flex justify-content-between">
+                                        <h2>Zurss 50S </h2>
+                                        <div class="badge badge-success align-self-center"> <p class="h5 px-3 ">499 euros</p></div>
+                                    </div>
+                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+
+                                    <div class="form-group ">
+                                        <label for="lenses">Choisissez le type de lentille :</label>
+                                        <select id="lenses" name="lenses" class="form-control btn-success">
+                                            <option value="0">35mm 1.4</option>
+                                            <option value="1">50mm 1.6</option>
+                                        </select>
+                                    </div>
+                                    <div class="text-center">
+                                        <a href="#" role="button" class="btn btn-success my-3 p-3 ">Ajouter au panier</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
+
             </div>
-        </section>
+        </div>
+    </section>
+    -->
+
     </main>
     <!--footer-->
     <footer class="bg-success ">

@@ -9953,4 +9953,10 @@ h3 {
   object-fit: cover;
 }
 
+.alert {
+  position: absolute;
+  margin: 1rem;
+  z-index: 1;
+}
+
 /*# sourceMappingURL=style.css.map */

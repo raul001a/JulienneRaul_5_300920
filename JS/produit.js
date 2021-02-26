@@ -6,10 +6,7 @@
 
 // TEST pour aller chercher l'API spécifique d'un identifiant
 
-// création d'une variable pour créer une url spécifique à ID
 
-let ID = "5be9c4c71c9d440000a730e9";
-let URL = "http://localhost:3000/api/cameras/" + ID;
 
 
 // déclaration des variables utilisées dans la fonction cardFull puis dans secondApiRequest
@@ -44,7 +41,20 @@ function cardFull() {
 
 };
 
+// création d'une variable pour créer une url spécifique à ID
+// récupère l'URL de la page
+let URL = window.location;
+console.log(URL);
+// récupère le paramètre
+let IDfull = window.location.search;
+//enlève le point d'interrogation
+let ID = IDfull.substring(1);
+console.log("test récupération du paramètre de l'URL " + ID); // voir comment enlever le point d'interrogation
 
+
+
+// crée l'URL spécifique selon l'ID 
+let apiURL = "http://localhost:3000/api/cameras/" + ID;
 
 
 // fonction requête de l'API d'un ID spécifique
@@ -68,12 +78,42 @@ secondApiRequest.onreadystatechange = function () {
         cardFull();
         
     }
+
+    else {
+        console.log("problème serveur API");
+        let productHide = document.getElementById("productdetail");
+        productHide.classList.add("d-none");
+    }
+
 };
 
-secondApiRequest.open("GET", URL);
+
+secondApiRequest.open("GET", apiURL);
 secondApiRequest.send();
 // fin fonction secondApiRequest
 
 
 // à quoi ressemble l'URL d'une ID :  http://localhost:3000/api/cameras/5be1ed3f1c9d44000030b061
 
+
+// affichage de l'alerte "ajouter au panier" quand je clique sur "voir le panier"
+
+let addToBasket = document.getElementById("addToBasketBtn");
+let basketAlert = document.getElementById("basketalert");
+
+addToBasket.addEventListener('click', function (event) {
+    event.preventDefault();
+    console.log("test bouton panier")
+    // enlève la class d-none (=display:none) au message d'alerte
+    basketAlert.classList.remove("d-none");
+
+    });
+
+// fermer l'alerte quand on clique sur la petite croix 
+let closeAlert = document.getElementById("closealert");
+
+closeAlert.addEventListener('click', function () {
+    console.log("test fermeture alerte");
+    //ajoute la class d-none (=display:none) au message d'alerte
+    basketAlert.classList.add("d-none");
+});
