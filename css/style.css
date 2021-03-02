@@ -9959,4 +9959,10 @@ h3 {
   z-index: 1;
 }
 
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
 /*# sourceMappingURL=style.css.map */

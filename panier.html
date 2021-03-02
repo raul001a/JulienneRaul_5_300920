@@ -3,9 +3,227 @@
 <html lang="fr">
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Son credo ? Se démarquer des grands site e-commerce comme Amazon en créant des applications thématiques ne vendant qu’un seul groupe de produits.">
+    <meta name="robots" content="index,follow">
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" type="image/png" href="images/caddie.png">
+    <script src="JS/panier.js" defer></script>
+
+    <title>Orinoco</title>
+
 </head>
-<body>
+<body class="bg-beige">
+    <!-- Header -->
+    <header class="bg-success ">
+        <div class="container ">
+            <div class="row ">
+                <nav class="col navbar navbar-expand-lg navbar-light ">
+                    <a class="navbar-brand" href="index.html"> <img src="images/logo.png" height="60" alt="logo du site Orinoco"></a>
+                    <div>
+                        <ul class="navbar-nav ">
+                            <li class="nav-item  ">
+                                <a class="nav-link" href="index.html">Accueil</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="#">Découvrir notre concept</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="#">Nous contacter</a>
+                            </li>
+                            <li class="nav-item active ">
+                                <a class="nav-link" href="#">Votre panier</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main>
+
+        <!--bloc quand panier est vide-->
+        <section>
+            <div class="container text-center my-5 text-dark h3 d-none">
+                <p> Votre panier est vide</p>
+                <a href="index.html" class="text-dark">Continuez mes achat</a>
+                <a href="index.html"> <img src="images/caddie.png" height="60" alt="logo du site Orinoco"></a>
+
+            </div>
+        </section>
+
+
+        <!--Maquette quand le panier est rempli-->
+        <section>
+            <div class="container-fluid my-4">
+                <h1 class="text-center h2 text-dark my-4">Votre panier</h1>
+                <form>
+                    <div class="row no-gutter text-center ">
+
+                        <div class="col-md-7">
+                            <h2 class="h3 text-dark mb-4">Récap de votre commande</h2>
+                            <table class="table table-hover table-bordered table-sm table-success ">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Modèle</th>
+                                        <th>Quantité</th>
+                                        <th>Prix</th>
+                                        <th>Prix total</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-success">
+                                        <td class="align-middle">Zurs 500</td>
+                                        <td>
+                                            <select class="form-control btn-success ">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </td>
+                                        <td class="align-middle">499 euros</td>
+                                        <td class="align-middle">499 euros</td>
+                                        <td class="align-middle">
+                                            <button type="button" class="close">
+                                                <span>&times;</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="table-success">
+                                        <td class="align-middle">Hirsh 400DTZ</td>
+                                        <td>
+                                            <select class="form-control btn-success ">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </td>
+                                        <td class="align-middle">3099 euros</td>
+                                        <td class="align-middle">6198 euros</td>
+                                        <td class="align-middle">
+                                            <button type="button" class="close">
+                                                <span>&times;</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="table-success">
+                                        <td class="align-middle">Franck JS105</td>
+                                        <td>
+                                            <select class="form-control btn-success">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </td>
+                                        <td class="align-middle">2099 euros</td>
+                                        <td class="align-middle">6297 euros</td>
+                                        <td class="align-middle">
+                                            <button type="button" class="close">
+                                                <span>&times;</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="3">Montant de votre commande :</th>
+                                        <th colspan="2">15000 euros</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <div class="text-center">
+                                <a  role="button" id="clearbasket" class="btn btn-success shadow-sm">Vider votre panier</a>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="mx-3">
+                                <h2 class="h3 text-dark mb-4"> Vos coordonnées</h2>
+
+                                <div class="row mb-3">
+                                    <label for="prenom">Prénom</label>
+                                    <input type="text" class="form-control" id="prenom" placeholder="Julienne" required>
+                                    <div class="invalid-feedback">Merci de compléter votre prénom</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="nom">Nom de famille</label>
+                                    <input type="text" class="form-control" id="nom" placeholder="Raul" required>
+                                    <div class="invalid-feedback">merci de compléter votre nom de famille</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" placeholder="raul001a@yahoo.fr" required>
+                                    <div class="invalid-feedback">Merci de compléter votre email</div>
+                                    <div class="invalid-feedback">Merci de saisir un mail valide</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="adresse">Adresse</label>
+                                    <input type="text" class="form-control" id="adresse" placeholder="Adresse" required>
+                                    <div class="invalid-feedback">merci de compléter votre ville</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="ville">Ville</label>
+                                    <input type="text" class="form-control" id="ville" placeholder="Ville" required>
+                                    <div class="invalid-feedback">merci de compléter votre ville</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-success shadow-sm " type="submit"><p class="h3">Confirmer votre commande</p></button>
+                    </div>
+                </form>
+               
+            </div>
+        </section>
+
+
+
+    </main>
+
+    <footer class="bg-success ">
+        <div class="container">
+            <div class="row pt-4 pb-3 ">
+                <div class="col">
+                    <ul class="list-inline text-center ">
+                        <li class="list-inline-item col-md-3 "><a class="text-dark" href="#">À propos</a></li>
+                        <li class="list-inline-item cols-md-3 "><a class="text-dark" href="#">Vie privée</a></li>
+                        <li class="list-inline-item col-md-3 "><a class="text-dark" href="#">Conditions d'utilisations</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!--faire des recherches sur cette fonction
+    <script>
+           /*La fonction principale de ce script est d'empêcher l'envoi du formulaire si un champ a été mal rempli
+            *et d'appliquer les styles de validation aux différents éléments de formulaire*/
+           (function() {
+             'use strict';
+             window.addEventListener('load', function() {
+               let forms = document.getElementsByClassName('needs-validation'); <!--class name ajouter dans le form, il faut aussi mettre no validate
+               let validation = Array.prototype.filter.call(forms, function(form) { <!--de plus la fonction ne fonctionne pas quand le mail n'est pas valide
+                 form.addEventListener('submit', function(event) {
+                   if (form.checkValidity() === false) {
+                     event.preventDefault();
+                     event.stopPropagation();
+                   }
+                   form.classList.add('was-validated');
+                 }, false);
+               });
+             }, false);
+           })();
+    </script>
+    -->
 
 </body>
 </html>

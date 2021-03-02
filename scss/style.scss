@@ -43,3 +43,10 @@
     z-index:1;
 }
 
+//test pour positionner le footer en bas, mais ca cache quand il n'y a pas besoin
+
+.footer {
+    position:absolute;
+    bottom: 0; 
+    width:100%;
+}
