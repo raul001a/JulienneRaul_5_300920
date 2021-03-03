@@ -114,12 +114,27 @@ function addToLocalStorage() {
     else {
         console.log("panier rempli");
         basket = JSON.parse(localStorage.getItem("basket")); // récupère basket dans le localStorage et le transforme en JSON
-        basket.push({  // rajoute un objet
-            id: productID,
-            name: productName,
-            price: productPrice,
-            quantity: 1,
-        });
+
+        // recherche de l'ID dans l'array
+        function searchForID(x) {
+            return x.id === productID;
+        };
+
+        let result = basket.find(searchForID); // renvoie l'objet contenant l'ID cherché
+        console.log(basket.find(searchForID));
+
+            if (result === undefined) { // = on a pas trouvé l'ID dans le localStorage
+                console.log("identifiant pas trouvé dans le tableau")
+                basket.push({  // 
+                    id: productID,
+                    name: productName,
+                    price: productPrice,
+                    quantity: 1,
+                });
+            }
+            else { // on a trouvé l'ID dans le localStorage
+                result.quantity++; // on rajoute une quantité
+            };
         
     }
     let basket_json = JSON.stringify(basket); // transforme en texte l'array basket
