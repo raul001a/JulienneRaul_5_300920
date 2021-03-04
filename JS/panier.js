@@ -1,5 +1,11 @@
 // JavaScript source code
 
+// déclaration des variables 
+let name;
+let price;
+let ID;
+let qtity;
+
 let basket = JSON.parse(localStorage.getItem("basket")); // récupère basket dans le localStorage et le transforme en JSON
 console.log(basket);
 
@@ -11,10 +17,10 @@ for (let i = 0; i < basketLength; i++) {
     let productDetailInBasket = basket[i]; // récupère le détail du produit en index 0
     console.log(productDetailInBasket);
 
-    let name = productDetailInBasket.name; // récupère le nom du produit en index i
-    let price = productDetailInBasket.price; // récupère le pric du produit en index i
-    let ID = productDetailInBasket.id; // récupère l'ID du produit en index i
-    let qtity = productDetailInBasket.quantity;
+    name = productDetailInBasket.name; // récupère le nom du produit en index i
+    price = productDetailInBasket.price; // récupère le pric du produit en index i
+    ID = productDetailInBasket.id; // récupère l'ID du produit en index i
+    qtity = productDetailInBasket.quantity; // récupère l'ID du produit en index i
     console.log(name, price, ID, qtity);
 
 
@@ -56,16 +62,22 @@ for (let i = 0; i < basketLength; i++) {
     tr.appendChild(col5);
     let button = document.createElement("button");
     button.setAttribute("class", "close");
+    button.setAttribute("ID", ID);
     button.setAttribute("type", "button");
     button.innerHTML = "<span>&times;</span>";
     col5.appendChild(button);
 }
 
 
+// fonction pour supprimer la ligne quand appuie sur le petit bouton avec la croix
+let suppr = document.getElementById(ID);
+suppr.addEventListener('click', function () {
+    console.log("j'ai cliqué sur l'id" + ID);
+});
 
 
 
-// vider le localStorage quand je clique sur le bouton vider le panier
+// vider le localStorage quand je clique sur le bouton vider le panier // attention cela ne met pas à jour le panier
 let clearLocalStorage = document.getElementById("clearbasket");
 
 clearLocalStorage.addEventListener('click', function (event) {
