@@ -108,32 +108,34 @@ function addToLocalStorage() {
             name: productName,
             price: productPrice,
             quantity: 1,
+            
         });
-        
+        console.log(basket);
     }
     else {
         console.log("panier rempli");
         basket = JSON.parse(localStorage.getItem("basket")); // récupère basket dans le localStorage et le transforme en JSON
 
         // recherche de l'ID dans l'array
-        function searchForID(x) {
-            return x.id === productID;
-        };
 
-        let result = basket.find(searchForID); // renvoie l'objet contenant l'ID cherché
-        console.log(basket.find(searchForID));
+        let result = basket.find(x => x.id === productID); // renvoie l'objet contenant l'ID cherché
+        
 
-            if (result === undefined) { // = on a pas trouvé l'ID dans le localStorage
+            if (result === undefined) { // = on a pas trouvé l'ID dans le panier
                 console.log("identifiant pas trouvé dans le tableau")
                 basket.push({  // 
                     id: productID,
                     name: productName,
                     price: productPrice,
-                    quantity: 1,
+                    quantity: 1, 
+                    
+                    
                 });
+                console.log(result);
             }
             else { // on a trouvé l'ID dans le localStorage
                 result.quantity++; // on rajoute une quantité
+                console.log(result);
             };
         
     }
