@@ -53,8 +53,41 @@ console.log("test récupération du paramètre de l'URL " + ID);
 // crée l'URL spécifique selon l'ID 
 let apiURL = "http://localhost:3000/api/cameras/" + ID;
 
+fetch(apiURL)
+    .then(function (reponse) {
+        console.log(reponse);
+        return reponse.json();
+    })
 
-// fonction requête de l'API d'un ID spécifique
+    .then(function (reponse) {
+        let secondApiRequest = JSON.stringify(reponse); // transforme en texte 
+        return secondApiReponse = JSON.parse(secondApiRequest); // transforme en array javascript
+
+    })
+    .then(function () {
+        console.log("test requête seconde API ok");
+        console.log(secondApiReponse);
+        console.log(secondApiReponse.description); // test pour vérifier qu'on voit la description
+        console.log(secondApiReponse.lenses.length);// affiche le nombre d'option de lentilles différentes
+        productID = secondApiReponse._id;
+        productName = secondApiReponse.name;
+        productPrice = secondApiReponse.price;
+        productDescription = secondApiReponse.description;
+        productImage = secondApiReponse.imageUrl;
+        lensesNb = secondApiReponse.lenses.length // récupère le nombre d'option de lentilles différentes
+        productLenses = secondApiReponse.lenses; // récupère l'array contenant les différents lenses
+        console.log(productLenses);
+
+        // exécute la fonction cardFull
+        cardFull();
+    })
+    .catch(function (error) {
+        console.log("erreur de chargement de l'API" + error);
+    })
+
+
+// fonction requête de l'API d'un ID spécifique avec XMLHttpRequest 
+/*
 var secondApiRequest = new XMLHttpRequest();
 secondApiRequest.onreadystatechange = function () {
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
@@ -85,11 +118,10 @@ secondApiRequest.onreadystatechange = function () {
 
 };
 
-
 secondApiRequest.open("GET", apiURL);
 secondApiRequest.send();
 // fin fonction secondApiRequest
-
+*/
 
 // à quoi ressemble l'URL d'une ID :  http://localhost:3000/api/cameras/5be1ed3f1c9d44000030b061
 

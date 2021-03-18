@@ -9,10 +9,28 @@ let qtity;
 let basket = JSON.parse(localStorage.getItem("basket")); // récupère basket dans le localStorage et le transforme en JSON
 console.log(basket);
 
+// fonction pour vérifier l'état du panier pour apparition section panier vide ou section avec tableau et formulaire
+function checkBasket() {
+    if (basket === null || basket.length === 0) { // soit basket n'a pas été créé dans le local storage soit il n'y a pas d'objet par ex si on a supprimé toutes les lignes
+        console.log("panier vide");
+        let commande = document.getElementById('commande');
+        commande.setAttribute("class", "d-none"); // on fait disparaître le tableau et le formulaire
+        let emptybasket = document.getElementById('emptybasket');
+        emptybasket.classList.remove("d-none");
+    }
+    else {
+        
+        emptybasket.setAttribute("class", "d-none"); // on fait disparaître la section panier vide
+    }
+};
+
+checkBasket();
+
 let basketLength = basket.length;
 console.log(basketLength);
 
 // boucle pour le remplissage du tableau
+
 
 for (let i = 0; i < basketLength; i++) {
 
@@ -22,7 +40,7 @@ for (let i = 0; i < basketLength; i++) {
     name = productDetailInBasket.name; // récupère le nom du produit en index i
     price = productDetailInBasket.price; // récupère le pric du produit en index i
     productID = productDetailInBasket.id; // récupère l'ID du produit en index i
-    qtity = productDetailInBasket.quantity; // récupère l'ID du produit en index i
+    qtity = productDetailInBasket.quantity; // récupère la quantité du produit en index i
     console.log(name, price, productID, qtity);
 
 
@@ -55,8 +73,8 @@ for (let i = 0; i < basketLength; i++) {
         console.log(inputQtity);
         console.log(this.name + " name/id de l'input modifié"); // récupère l'id du bouton qu'on a préalablement rempli avec avec productID
 
-        // test pour modifier la value de l'input par la valeur saisir - attention voir si quand ce n'est pas un nombre
-       inputQtity.setAttribute("value", event.target.value); // ok ca fonctionne mais ca ne met pas à jour direct le prix et faut encore le mettre dans le panier
+        // modifier la value de l'input par la valeur saisir - attention voir si quand ce n'est pas un nombre
+        inputQtity.setAttribute("value", event.target.value); 
         console.log(inputQtity); 
 
         let result = basket.find(x => x.id === this.name); // renvoie l'objet contenant l'ID cherché
@@ -65,9 +83,12 @@ for (let i = 0; i < basketLength; i++) {
         console.log(basket);
         let basket_json = JSON.stringify(basket); // transforme en texte l'array basket
         localStorage.setItem("basket", basket_json); // le renvoie dans le localStorage
-        // ajouter qqchose pour mettre à jour la page
-        
 
+        //met à jour le prix total de la ligne
+        col4.textContent = (price / 100) * (inputQtity.value) + " euros";
+
+        //relance la fonction pour calculer le montant total de la commande
+        sumCalc();
     });
 
 
@@ -87,7 +108,7 @@ for (let i = 0; i < basketLength; i++) {
     let button = document.createElement("button");
     button.setAttribute("class", "close");
     button.setAttribute("ID", productID); // à voir pour changer avec une concatenation productID qqchose cf. ID du button
-    button.setAttribute("type", "submit");
+    button.setAttribute("type", "button"); // les différents types de bouton
     button.innerHTML = "<span>&times;</span>";
     col5.appendChild(button);
 
@@ -96,8 +117,8 @@ for (let i = 0; i < basketLength; i++) {
     let suppr = tbody.getElementsByTagName('button'); // pour que cela ne sélectionne que les boutons de tbody
     let supprbtn = suppr[i];
     console.log(suppr);
-    supprbtn.addEventListener('click', function (event) {
-        event.preventDefault();
+    supprbtn.addEventListener('click', function () {
+       
         console.log(supprbtn);
         console.log(this.id); // récupère l'id du bouton qu'on a préalablement rempli avec avec productID
         let idfilter = this.id;
@@ -105,7 +126,12 @@ for (let i = 0; i < basketLength; i++) {
         console.log(basket);
         let basket_json = JSON.stringify(basket); // transforme en texte l'array basket
         localStorage.setItem("basket", basket_json); // le renvoie dans le localStorage
-        // ajouter qqchose pour mettre à jour la page
+        // supprimer la ligne contenant le produit
+        tr.remove();
+        //relance la fonction pour calculer le montant total de la commande
+        sumCalc();
+        // vérifie si le panier est vide 
+        checkBasket();  
 
     });
     
@@ -115,35 +141,88 @@ for (let i = 0; i < basketLength; i++) {
 
 
 // pour récupérer le montant global de la commande
-var valeurInitiale = 0;
-var somme = basket.reduce(
-    (accumulateur, valeurCourante) => accumulateur + (valeurCourante.quantity * valeurCourante.price)
-    , valeurInitiale
-);
 
-console.log(somme); 
-let total = document.getElementById("total");
-total.textContent = somme / 100 + " euros";
+// calcul la somme de chaque instance de l'array presomme
+let somme 
+function sumCalc() {
+    // crée un array de prix * quantité de chaque produit dans basket
+    let presomme = basket.map(function (x) {
+        return x.price * x.quantity;
+    });
+    console.log(presomme);
+    // fait la somme de chaque instance de l'array
+    somme = presomme.reduce((a, b) => a + b, 0);
+    console.log(somme);
+    let total = document.getElementById("total");
+    total.textContent = somme / 100 + " euros";
+};
 
+sumCalc();
 
-// deuxième version pour récupérer le montant
-let sommetest = basket.map(function (x) {
-    return x.price * x.quantity;
-});
+// fin calcul montant global
 
-console.log(sommetest);
-let sommetest2 = sommetest.reduce((a, b) => a + b, 0);
-console.log(sommetest2);
-
-
-// vider le localStorage quand je clique sur le bouton vider le panier // attention cela ne met pas à jour le panier
+// vider le localStorage quand je clique sur le bouton vider le panier 
 let clearLocalStorage = document.getElementById("clearbasket");
 
 clearLocalStorage.addEventListener('click', function (event) {
     event.preventDefault();
-    localStorage.clear();
-    // ajouter qqchose pour mettre à jout la page
+    localStorage.clear(); // vide le localstorage
+    // ajoute et enlève les classes d-none à commande et emptybasket
+    let commande = document.getElementById('commande');
+    commande.setAttribute("class", "d-none"); // on fait disparaître le tableau et le formulaire
+    let emptybasket = document.getElementById('emptybasket');
+    emptybasket.classList.remove("d-none");
+    
 });
+
+
+ // vérifier sur panier et sur les autres pages la balise a avec un role button
+
+
+
+
+// création de l'objet à envoyer à l'API
+let prenom = document.getElementById('prenom').value;
+let nom = document.getElementById('nom').value;
+let adresse = document.getElementById('adresse').value 
+let email = document.getElementById('email').value
+let ville = document.getElementById('ville').value
+
+let products = basket.map(function (x) {
+    return x.id;
+});
+
+let order = {
+    contact: {
+        firstName: prenom,
+        lastName: nom,
+        address: adresse,
+        city: ville,
+        email: email,
+    },
+    products: products,
+}
+
+console.log(order);
+console.log(JSON.stringify(order));
+
+
+//  requête fetch et post
+
+fetch("http://localhost:3000/api/cameras/order", {
+    method: 'POST',
+    body: JSON.stringify(order), // transforme order en JSON
+    headers: { 'Content-Type': 'application/json; charset=utf-8' }, // a demander 
+})
+    .catch(() => {
+        console.log(error)
+    })
+    .then(function (reponse) {
+        return reponse.json();
+    })
+    .then(function (result) {
+        console.log(result);
+    })
 
 
 

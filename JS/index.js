@@ -17,7 +17,7 @@ function cardCreate() {
     // ajoute la première div à "card group" 
     let printCard = document.getElementById('cardGroup');
     let firstDiv = document.createElement("div");
-    firstDiv.setAttribute("class", "col-12 col-sm-6 col-lg-4");
+    firstDiv.setAttribute("class", "col-12 col-sm-6 col-lg-4 d-flex ");
     printCard.appendChild(firstDiv);
 
     // crée la second div et ses attributs
@@ -28,7 +28,7 @@ function cardCreate() {
     // crée un élément img et ajoute attribut src / class / alt
     let img = document.createElement("img");
     img.setAttribute("src", image);
-    img.setAttribute("class", "card-img");
+    img.setAttribute("class", "card-img ");
     img.setAttribute("alt", "photo d'appareil photo")
     secondDiv.appendChild(img); // je crée à la deuxième div de cardGroup
 
@@ -77,7 +77,7 @@ function cardCreate() {
     a.setAttribute("class", "btn btn-success stretched-link");
     a.setAttribute("role", "button");
     a.setAttribute("href", "produit.html?"+ ID); //lien vers page produit en ajoutant l'ID comme paramètre
-    a.textContent = "Voir le détail"; // regarder pourquoi accent fonctionne pas
+    a.textContent = "Voir plus"; // 
     // ajoute le <a> au bouton
     btnDetail.appendChild(a);
 
@@ -87,7 +87,48 @@ function cardCreate() {
 
 // fin de la fonction cardCreate
 
+// requête de l'API avec fetch 
 
+fetch("http://localhost:3000/api/cameras")
+    .then(function (reponse) {
+        console.log(reponse);
+        return reponse.json();
+    })
+
+    .then(function (reponse) {      
+        let firstApiRequest = JSON.stringify(reponse); // transforme en texte 
+        return firstApiReponse = JSON.parse(firstApiRequest); // transforme en array javascript
+        
+    }) 
+    .then(function () {
+        console.log(firstApiReponse);
+        console.log(firstApiReponse.length);
+        // boucle qui répète autant de fois que la longueur de l'API // la boucle est bien répétée 5 fois 
+        for (let i = 0; i < firstApiReponse.length; i++) {
+            console.log("test boucle");
+            let productDetail = firstApiReponse[i]; // récupère le détail du produit en index i
+            name = productDetail.name; // récupère le nom du produit en index i
+            price = productDetail.price; // récupère le pric du produit en index i
+            description = productDetail.description; // récupère la description du produit en index i
+            image = productDetail.imageUrl; // récupère l'url du produit en index i
+            ID = productDetail._id; // récupère l'ID du produit en index i
+
+            console.log(name); // affiche le nom du produit en index i
+            console.log(price); // affiche le prix du produit en index i
+            console.log(description); // affiche la description du produit en index i
+            console.log(image); // affiche l'url du produit en index i
+            console.log(ID);
+
+            // lancer la fonction cardCreate
+            cardCreate();
+        }
+    })
+    .catch(function (error) {
+        console.log("erreur de chargement de l'API" + error);
+    })
+
+
+/* première requête d'abod ecrit avec XMlHttRequest
 // requête sur l'API principale 
 
     let firstApiRequest = new XMLHttpRequest();
@@ -129,7 +170,7 @@ function cardCreate() {
 
     firstApiRequest.open("GET", "http://localhost:3000/api/cameras");
     firstApiRequest.send();
-
+*/
 
 
 
