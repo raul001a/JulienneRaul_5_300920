@@ -32,6 +32,7 @@ console.log(basketLength);
 // boucle pour le remplissage du tableau
 
 
+
 for (let i = 0; i < basketLength; i++) {
 
     let productDetailInBasket = basket[i]; // récupère le détail du produit en index 0
@@ -60,26 +61,28 @@ for (let i = 0; i < basketLength; i++) {
     tr.appendChild(col2);
     let inputQtity = document.createElement("input");
     inputQtity.setAttribute("class", "form-control btn-success");
+    inputQtity.setAttribute("name", "inputQtt");
     inputQtity.setAttribute("type", "number");
     inputQtity.setAttribute("ID", productID + "-qtity"); // à voir pour changer avec une concatenation productID qqchose cf. ID du button
     inputQtity.setAttribute("min", "1");
-    inputQtity.setAttribute("max", "100");
+    inputQtity.setAttribute("max", "99");
     inputQtity.setAttribute("value", qtity);
     col2.appendChild(inputQtity);
 
      // fonction pour mettre à jour le montant total de la ligne quand on change la quantité
     inputQtity.addEventListener('change', function () {
-       
+
+       validQtity(this); // fonction pour tester que c'est bien un chiffre entre 1 et 100
+
         // modifier la value de l'input par la valeur saisir - attention voir si quand ce n'est pas un nombre
         inputQtity.setAttribute("value", event.target.value); 
         console.log(inputQtity); 
 
         console.log(inputQtity);
-        console.log(this.ID + " id de l'input modifié"); // récupère l'id qu'on a préalablement rempli avec avec productID
+        console.log(this.id + " id de l'input modifié"); // récupère l'id qu'on a préalablement rempli avec avec productID
         let idqity = this.id.split("-")[0]; // récupère l'ID en prenant l'index O du tableau créé avec split 
         let result = basket.find(x => x.id === idqity); // renvoie l'objet contenant l'ID cherché
         result.quantity = inputQtity.value; // on modifie la quantité par la valeur de l'input
-
         console.log(basket);
         let basket_json = JSON.stringify(basket); // transforme en texte l'array basket
         localStorage.setItem("basket", basket_json); // le renvoie dans le localStorage
@@ -292,6 +295,7 @@ const validAdresse = function (inputAdresse) {
 let ville = document.getElementById("ville");
 ville.addEventListener('change', function () {
     validVille(this);
+    
 });
 
 const validVille = function (inputVille) {
@@ -313,12 +317,49 @@ const validVille = function (inputVille) {
 
 };
 
+
+// fonction pour vérifier la quantité saisie // utilisée dans la boucle de création du tableur
 // regexp pour vérifier entre 0 et 100 et pas de lettre ^[1-9]{1}+[0-9]{0,1}$
+const validQtity = function (inputQtity) {
+    let qtityRegExp = new RegExp('^[1-9]{1}[0-9]{0,1}$','g'); // renverra true entre 1 et 100
+    let testQtity = qtityRegExp.test(inputQtity.value);
+    console.log(testQtity + " testQtity");
+    let alertqtity = document.getElementById("alertqtity");
 
+    if (testQtity) {
+        alertqtity.classList.add("d-none");
+        console.log("quantité valide");
+        return true;
+    }
+    else {
+        alertqtity.classList.remove("d-none");
+        console.log("quantité invalide");
+        return false;
+    }
 
+};
 
+// fonction pour tester les différentes quantités saisies dans le tableau (entre 1 et 100 et que des chiffres) // fonction utilisée dans lorsque je clique sur le bouton
+let inputQtt = document.getElementsByName("inputQtt");
 
+const testvalidquantity = function () {
+    let arraytest = [];
 
+    // crée un tableau où je renvoie le résultat true ou false du test validQtity pour chaque ligne
+for (let i = 0; i < inputQtt.length; i++) {
+    let testqtityresult = validQtity(inputQtt[i]);
+    arraytest.push(testqtityresult);
+    };
+    console.log(arraytest);
+    if (arraytest.includes(false)) { // si le tableau contient "false", la condition est rempli. il faut que ca me renvoie faux pour ma validation
+        return false;
+    }
+    else {
+        return true;
+    }
+};
+
+console.log (testvalidquantity());
 
 // fonction pour créer l'objet contact et order et l'envoyer à l'API
 function sendOrder() {
@@ -377,10 +418,10 @@ function sendOrder() {
 let clickOrder = document.getElementById("sendorder");
 
 clickOrder.addEventListener('click', function (event) {
-    event.preventDefault(); // si je ne mets pas cela, le post ne fonctionne pas, même si tout est bien rempli. en revanche, si tout n'est pas correctement rempli cela envoie quand même mais échec
+    event.preventDefault();
 
-    // vérifie si le formulaire est correctement rempli 
-    if (validEmail(email) && validPrenom(prenom) && validNom(nom) && validAdresse(adresse) && validVille(ville) ) {
+    // vérifie si le formulaire est correctement rempli  ainsi que les quantités
+    if (validEmail(email) && validPrenom(prenom) && validNom(nom) && validAdresse(adresse) && validVille(ville) && testvalidquantity() ) {
         sendOrder();
     }
     else {
