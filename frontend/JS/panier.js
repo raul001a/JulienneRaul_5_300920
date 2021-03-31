@@ -17,23 +17,21 @@ function checkBasket() {
         commande.setAttribute("class", "d-none"); // on fait disparaître le tableau et le formulaire
         let emptybasket = document.getElementById('emptybasket');
         emptybasket.classList.remove("d-none");
+        
     }
     else {
-        
         emptybasket.setAttribute("class", "d-none"); // on fait disparaître la section panier vide
     }
 };
 
 checkBasket();
 
-let basketLength = basket.length;
-console.log(basketLength);
+
+
 
 // boucle pour le remplissage du tableau
 
-
-
-for (let i = 0; i < basketLength; i++) {
+for (let i = 0; i < basket.length; i++) {
 
     let productDetailInBasket = basket[i]; // récupère le détail du produit en index 0
     console.log(productDetailInBasket);
@@ -72,18 +70,14 @@ for (let i = 0; i < basketLength; i++) {
      // fonction pour mettre à jour le montant total de la ligne quand on change la quantité
     inputQtity.addEventListener('change', function () {
 
-       validQtity(this); // fonction pour tester que c'est bien un chiffre entre 1 et 100
+       validQtity(this.value); // fonction pour tester que c'est bien un chiffre entre 1 et 100
 
-        // modifier la value de l'input par la valeur saisir - attention voir si quand ce n'est pas un nombre
+        // modifier la value de l'input par la valeur saisie
         inputQtity.setAttribute("value", event.target.value); 
-        console.log(inputQtity); 
-
-        console.log(inputQtity);
         console.log(this.id + " id de l'input modifié"); // récupère l'id qu'on a préalablement rempli avec avec productID
         let idqity = this.id.split("-")[0]; // récupère l'ID en prenant l'index O du tableau créé avec split 
         let result = basket.find(x => x.id === idqity); // renvoie l'objet contenant l'ID cherché
         result.quantity = inputQtity.value; // on modifie la quantité par la valeur de l'input
-        console.log(basket);
         let basket_json = JSON.stringify(basket); // transforme en texte l'array basket
         localStorage.setItem("basket", basket_json); // le renvoie dans le localStorage
 
@@ -115,19 +109,14 @@ for (let i = 0; i < basketLength; i++) {
     button.innerHTML = "<span>&times;</span>";
     col5.appendChild(button);
 
-    // fonction pour supprimer la ligne quand appuie sur le petit bouton avec la croix // pas fini
+    //  pour supprimer la ligne quand appuie sur le petit bouton avec la croix 
     
     let suppr = tbody.getElementsByTagName('button'); // pour que cela ne sélectionne que les boutons de tbody
     let supprbtn = suppr[i];
-    console.log(suppr);
     supprbtn.addEventListener('click', function () {
-
-        console.log(supprbtn);
         console.log(this.id); // récupère l'id du bouton qu'on a préalablement rempli avec avec productID concaténé à -delete
         let iddelete = this.id.split("-")[0]; // récupère l'ID en prenant l'index O du tableau créé avec split 
-        console.log(iddelete);
         basket = basket.filter(x => x.id !== iddelete); // renvoit un tableau où on a enlevé l'objet qui contenait l'ID cliqué 
-        console.log(basket);
         let basket_json = JSON.stringify(basket); // transforme en texte l'array basket
         localStorage.setItem("basket", basket_json); // le renvoie dans le localStorage
         // supprimer la ligne contenant le produit
@@ -136,32 +125,27 @@ for (let i = 0; i < basketLength; i++) {
         sumCalc();
         // vérifie si le panier est vide 
         checkBasket();  
-
-    });
-    
+    });    
 }
-
 // fin de la boucle pour le remplissage du tableau
 
 
 // pour récupérer le montant global de la commande
-
-// calcul la somme de chaque instance de l'array presomme
 
 function sumCalc() {
     // crée un array de prix * quantité de chaque produit dans basket
     let presomme = basket.map(function (x) {
         return x.price * x.quantity;
     });
-    console.log(presomme);
     // fait la somme de chaque instance de l'array
     somme = presomme.reduce((a, b) => a + b, 0);
-    console.log(somme);
+    console.log("test montant de la commande" + somme);
     let total = document.getElementById("total");
     total.textContent = somme / 100 + " euros";
 };
 
 sumCalc();
+
 
 // fin calcul montant global
 
@@ -171,32 +155,20 @@ let clearLocalStorage = document.getElementById("clearbasket");
 clearLocalStorage.addEventListener('click', function (event) {
     event.preventDefault();
     localStorage.clear(); // vide le localstorage
-    // ajoute et enlève les classes d-none à commande et emptybasket
-    let commande = document.getElementById('commande');
-    commande.setAttribute("class", "d-none"); // on fait disparaître le tableau et le formulaire
-    let emptybasket = document.getElementById('emptybasket');
-    emptybasket.classList.remove("d-none");
-    
+    basket = JSON.parse(localStorage.getItem("basket"));
+    checkBasket();    
 });
-
-
-
-
-
 
 
 // fonction pour valider l'email 
 let email = document.getElementById("email");
 email.addEventListener('change', function () {
-    console.log("test email");
-    validEmail(this);
+    validEmail(this.value);
 });
 
 const validEmail = function (inputEmail) {
-    let emailRegExp = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$', 'g');
-    console.log(emailRegExp);
-    let testEmail = emailRegExp.test(inputEmail.value); // renvoie true quand le regExp est OK
-    console.log(testEmail);
+    let emailRegExp = new RegExp('^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+[.]+[a-zA-Z]{2,10}$', 'g');
+    let testEmail = emailRegExp.test(inputEmail); // renvoie true quand le regExp est OK
     let alertEmail = document.getElementById("alertemail");
 
     if (testEmail) {
@@ -211,21 +183,26 @@ const validEmail = function (inputEmail) {
     }
 };
 
+// plan de test
+//let testemail1 = "raul001a@yahoo.fr";
+//let testemail2 = "raul001a@yahoo.r";
+//console.log("test1" + validEmail(testemail1)); // doit retourner true
+//console.log("test2" + validEmail(testemail2)); // doit retourner false
+
 // fonction pour vérifier le prénom 
-// au moins deux caractères, moins de 20 caractères, pas de chiffres, (pas de caractères spéciaux) 
+// au moins deux caractères, moins de 20 caractères, pas de chiffres
 
 let prenom = document.getElementById("prenom");
 prenom.addEventListener('change', function () {
-    validPrenom(this);
+    validPrenom(this.value);
 });
 
 const validPrenom = function (inputPrenom) {
-    let prenomRegExp = new RegExp('[0-9]', 'g'); // renverra true quand il y a un chiffre // cherché pour trouver les caractères spéciaux
-    let testprenom = prenomRegExp.test(inputPrenom.value);
-    console.log(testprenom + " testPrenom");
+    let prenomRegExp = new RegExp('[0-9]', 'g'); // renverra true quand il y a un chiffre
+    let testprenom = prenomRegExp.test(inputPrenom);
     let alertPrenom = document.getElementById("alertprenom");
 
-    if (testprenom || inputPrenom.value.length < 2 || inputPrenom.value.length > 20) {
+    if (testprenom || inputPrenom.length < 2 || inputPrenom.length > 20) {
         alertPrenom.classList.remove("d-none");
         console.log("prenom invalide");
         return false;
@@ -234,25 +211,31 @@ const validPrenom = function (inputPrenom) {
         alertPrenom.classList.add("d-none");
         console.log("prenom valide");
         return true;
-    }
-    
+    }   
 };
 
+// plan de test
+//let testprenom1 = "julienne";
+//let testprenom2 = "ju";
+//let testprenom3 = "ju8";
+//console.log("testprénom1" + validPrenom(testprenom1)); // doit retourner true
+//console.log("testprénom2" + validPrenom(testprenom2)); // doit retourner false
+//console.log("testprénom3" + validPrenom(testprenom3)); // doit retourner false
+
 // fonction pour vérifier le nom 
-// au moins deux caractères, moins de 30 caractères, pas de chiffres, (pas de caractères spéciaux) 
+// au moins deux caractères, moins de 30 caractères, pas de chiffres
 
 let nom = document.getElementById("nom");
 nom.addEventListener('change', function () {
-    validNom(this);
+    validNom(this.value);
 });
 
 const validNom = function (inputNom) {
-    let nomRegExp = new RegExp('[0-9]', 'g'); // renverra true quand il y a un chiffre // cherché pour trouver les caractères spéciaux
-    let testnom = nomRegExp.test(inputNom.value);
-    console.log(testnom + " testNom");
+    let nomRegExp = new RegExp('[0-9]', 'g'); // renverra true quand il y a un chiffre 
+    let testnom = nomRegExp.test(inputNom);
     let alertNom = document.getElementById("alertnom");
 
-    if (testnom || inputNom.value.length < 2 || inputNom.value.length > 30) {
+    if (testnom || inputNom.length < 2 || inputNom.length > 30) {
         alertNom.classList.remove("d-none");
         console.log("nom invalide");
         return false;
@@ -270,13 +253,13 @@ const validNom = function (inputNom) {
 
 let adresse = document.getElementById("adresse");
 adresse.addEventListener('change', function () {
-    validAdresse(this);
+    validAdresse(this.value);
 });
 
 const validAdresse = function (inputAdresse) {
     let alertAdresse = document.getElementById("alertadresse");
 
-    if ( inputAdresse.value.length < 6 || inputAdresse.value.length > 100) {
+    if ( inputAdresse.length < 6 || inputAdresse.length > 100) {
         alertAdresse.classList.remove("d-none");
         console.log("adresse invalide");
         return false;
@@ -290,21 +273,20 @@ const validAdresse = function (inputAdresse) {
 };
 
 // fonction pour vérifier la ville
-// au moins deux caractères, moins de 30 caractères, pas de chiffres, (pas de caractères spéciaux) 
+// au moins deux caractères, moins de 30 caractères, pas de chiffres
 
 let ville = document.getElementById("ville");
 ville.addEventListener('change', function () {
-    validVille(this);
+    validVille(this.value);
     
 });
 
 const validVille = function (inputVille) {
-    let villeRegExp = new RegExp('[0-9]', 'g'); // renverra true quand il y a un chiffre // cherché pour trouver les caractères spéciaux
-    let testville = villeRegExp.test(inputVille.value);
-    console.log(testville + " testVille");
+    let villeRegExp = new RegExp('[0-9]', 'g'); // renverra true quand il y a un chiffre 
+    let testville = villeRegExp.test(inputVille);
     let alertVille = document.getElementById("alertville");
 
-    if (testville || inputVille.value.length < 2 || inputVille.value.length > 30) {
+    if (testville || inputVille.length < 2 || inputVille.length > 30) {
         alertVille.classList.remove("d-none");
         console.log("ville invalide");
         return false;
@@ -319,11 +301,10 @@ const validVille = function (inputVille) {
 
 
 // fonction pour vérifier la quantité saisie // utilisée dans la boucle de création du tableur
-// regexp pour vérifier entre 0 et 100 et pas de lettre ^[1-9]{1}+[0-9]{0,1}$
+// regexp pour vérifier entre 1 et 99 et pas de lettre ^[1-9]{1}+[0-9]{0,1}$
 const validQtity = function (inputQtity) {
     let qtityRegExp = new RegExp('^[1-9]{1}[0-9]{0,1}$','g'); // renverra true entre 1 et 100
-    let testQtity = qtityRegExp.test(inputQtity.value);
-    console.log(testQtity + " testQtity");
+    let testQtity = qtityRegExp.test(inputQtity);
     let alertqtity = document.getElementById("alertqtity");
 
     if (testQtity) {
@@ -336,18 +317,22 @@ const validQtity = function (inputQtity) {
         console.log("quantité invalide");
         return false;
     }
-
 };
 
-// fonction pour tester les différentes quantités saisies dans le tableau (entre 1 et 100 et que des chiffres) // fonction utilisée dans lorsque je clique sur le bouton
+// plan de test
+//console.log("test qtity 2" + validQtity(0)); // doit retourner false
+//console.log("test qtity 3" + validQtity(100)); // doit retourner false
+//console.log("test qtity 4" + validQtity(10)); // doit retourner true
+//console.log("test qtity 5" + validQtity("z9")); // doit retourner false
+
+// fonction pour tester les différentes quantités saisies dans le tableau (entre 1 et 99 et que des chiffres) // fonction utilisée dans lorsque je clique sur le bouton sendOrder
 let inputQtt = document.getElementsByName("inputQtt");
 
 const testvalidquantity = function () {
     let arraytest = [];
-
     // crée un tableau où je renvoie le résultat true ou false du test validQtity pour chaque ligne
 for (let i = 0; i < inputQtt.length; i++) {
-    let testqtityresult = validQtity(inputQtt[i]);
+    let testqtityresult = validQtity(inputQtt[i].value);
     arraytest.push(testqtityresult);
     };
     console.log(arraytest);
@@ -359,7 +344,6 @@ for (let i = 0; i < inputQtt.length; i++) {
     }
 };
 
-console.log (testvalidquantity());
 
 // fonction pour créer l'objet contact et order et l'envoyer à l'API
 function sendOrder() {
@@ -367,9 +351,9 @@ function sendOrder() {
     // création de l'objet à envoyer à l'API
     let prenom = document.getElementById('prenom').value;
     let nom = document.getElementById('nom').value;
-    let adresse = document.getElementById('adresse').value
-    let email = document.getElementById('email').value
-    let ville = document.getElementById('ville').value
+    let adresse = document.getElementById('adresse').value;
+    let email = document.getElementById('email').value;
+    let ville = document.getElementById('ville').value;
 
     let products = basket.map(function (x) {
         return x.id;
@@ -386,10 +370,6 @@ function sendOrder() {
         products: products,
     }
 
-    console.log(order);
-    console.log(JSON.stringify(order));
-
-
     //  requête fetch et post
 
     fetch("http://localhost:3000/api/cameras/order", {
@@ -401,7 +381,6 @@ function sendOrder() {
             return reponse.json();
         })
         .then(function (result) {
-            console.log(result);
             window.location.href = "recaporder.html?" + "prenom=" + prenom + "&total=" + somme + "&orderId=" + result.orderId;
             localStorage.clear(); // vide le localstorage
         })
@@ -413,6 +392,8 @@ function sendOrder() {
 // fin de la fonction sendOrder
 
 
+
+
 // envoi de la commande
 
 let clickOrder = document.getElementById("sendorder");
@@ -421,7 +402,7 @@ clickOrder.addEventListener('click', function (event) {
     event.preventDefault();
 
     // vérifie si le formulaire est correctement rempli  ainsi que les quantités
-    if (validEmail(email) && validPrenom(prenom) && validNom(nom) && validAdresse(adresse) && validVille(ville) && testvalidquantity() ) {
+    if (validEmail(email.value) && validPrenom(prenom.value) && validNom(nom.value) && validAdresse(adresse.value) && validVille(ville.value) && testvalidquantity() ) {
         sendOrder();
     }
     else {

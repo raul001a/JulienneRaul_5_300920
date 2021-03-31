@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "sass": "sass --watch ./frontend/scss/style.scss:./frontend/css/style.css"
+    "sass": "sass --watch ./frontend/scss/bootstrap.scss:./frontend/css/bootstrap.css"
   },
   "author": "",
   "license": "ISC",

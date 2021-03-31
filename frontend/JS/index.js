@@ -11,8 +11,6 @@ let ID;
 
 // fonction pour créer une Card 
 function cardCreate() {
-
-    console.log("test création fonction cardCreate"); 
     
     // ajoute la première div à "card group" 
     let printCard = document.getElementById('cardGroup');
@@ -64,7 +62,6 @@ function cardCreate() {
     descriptionCard.textContent = description;
     cardBody.appendChild(descriptionCard);
 
-    
 
     // création du bouton "voir le détail"
     let btnDetail = document.createElement("div");
@@ -79,10 +76,7 @@ function cardCreate() {
     a.setAttribute("href", "produit.html?"+ ID); //lien vers page produit en ajoutant l'ID comme paramètre
     a.textContent = "Voir plus"; // 
     // ajoute le <a> au bouton
-    btnDetail.appendChild(a);
-
-    
-
+    btnDetail.appendChild(a);  
 };
 
 // fin de la fonction cardCreate
@@ -92,6 +86,7 @@ function cardCreate() {
 fetch("http://localhost:3000/api/cameras")
     .then(function (reponse) {
         console.log(reponse);
+        console.log("connexion réussie");
         return reponse.json();
     })
 
@@ -105,19 +100,13 @@ fetch("http://localhost:3000/api/cameras")
         console.log(firstApiReponse.length);
         // boucle qui répète autant de fois que la longueur de l'API // la boucle est bien répétée 5 fois 
         for (let i = 0; i < firstApiReponse.length; i++) {
-            console.log("test boucle");
             let productDetail = firstApiReponse[i]; // récupère le détail du produit en index i
             name = productDetail.name; // récupère le nom du produit en index i
             price = productDetail.price; // récupère le pric du produit en index i
             description = productDetail.description; // récupère la description du produit en index i
             image = productDetail.imageUrl; // récupère l'url du produit en index i
             ID = productDetail._id; // récupère l'ID du produit en index i
-
             console.log(name); // affiche le nom du produit en index i
-            console.log(price); // affiche le prix du produit en index i
-            console.log(description); // affiche la description du produit en index i
-            console.log(image); // affiche l'url du produit en index i
-            console.log(ID);
 
             // lancer la fonction cardCreate
             cardCreate();
@@ -127,50 +116,6 @@ fetch("http://localhost:3000/api/cameras")
         console.log("erreur de chargement de l'API" + error);
     })
 
-
-/* première requête d'abod ecrit avec XMlHttRequest
-// requête sur l'API principale 
-
-    let firstApiRequest = new XMLHttpRequest();
-    firstApiRequest.onreadystatechange = function () {
-        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-            let firstApiReponse = JSON.parse(this.responseText);
-            console.log(firstApiReponse); // affiche la totalité de l'API
-            console.log(firstApiReponse.length); // affiche la longueur de l'API
-            console.log(firstApiReponse[0]); // affiche le détail du produit en index 0
-
-
-            // boucle qui répète autant de fois que la longueur de l'API // la boucle est bien répétée 5 fois 
-            for (let i = 0; i < firstApiReponse.length; i++) {
-                console.log("test boucle");
-                let productDetail = firstApiReponse[i]; // récupère le détail du produit en index i
-                name = productDetail.name; // récupère le nom du produit en index i
-                price = productDetail.price; // récupère le pric du produit en index i
-                description = productDetail.description; // récupère la description du produit en index i
-                image = productDetail.imageUrl; // récupère l'url du produit en index i
-                ID = productDetail._id; // récupère l'ID du produit en index i
-
-                console.log(name); // affiche le nom du produit en index i
-                console.log(price); // affiche le prix du produit en index i
-                console.log(description); // affiche la description du produit en index i
-                console.log(image); // affiche l'url du produit en index i
-                console.log(ID);
-
-                // lancer la fonction cardCreate
-                cardCreate();
-            }
-
-        }
-
-        else {
-            console.log("problème serveur API");
-            
-        }
-    };
-
-    firstApiRequest.open("GET", "http://localhost:3000/api/cameras");
-    firstApiRequest.send();
-*/
 
 
 
