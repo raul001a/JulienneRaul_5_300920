@@ -9,6 +9,8 @@ let productDescription;
 let productImage;
 let lensesNb;
 let productLenses;
+let lense;
+let index;
 
 // fonction pour remplir la card 
 function cardFull() {
@@ -23,22 +25,19 @@ function cardFull() {
     document.getElementById('productImage').setAttribute("src", productImage); 
 
     //ajoute le menu déroulant des lentilles
-    addLenses();
-
-    
+    // boucle qui répète autant de fois que la longueur du nombre d'option de lentilles
+    productLenses.forEach(addLenses(lense, index));    
 };
 
-function addLenses() {
-    // boucle qui répète autant de fois que la longueur du nombre d'option de lentilles
-    for (let i = 0; i < lensesNb; i++) {
+function addLenses(lense) {
         // remplir le menu déroulant des lentilles : crée des éléments Option au menu déroulant et les remplit avec value = i (index de lentille) et le contenu de l'array lenses
+
         let lenses = document.getElementById("lenses");
         let lensesOption = document.createElement("option");
-        lensesOption.setAttribute("value", i);
-        lensesOption.textContent = productLenses[i]; // rècupère le contenu de l'array lenses, d'abord index 0, puis 1...
+        lensesOption.setAttribute("value", index);
+        lensesOption.textContent = lense; // rècupère le contenu de l'array lenses
         lenses.appendChild(lensesOption);
-    }
-};
+    };
 
 // création d'une variable pour créer une url spécifique à ID
 // récupère l'URL de la page

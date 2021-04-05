@@ -7,12 +7,12 @@ let productID;
 let qtity;
 
 let basket = JSON.parse(localStorage.getItem("basket")); // récupère basket dans le localStorage et le transforme en JSON
-console.log(basket);
+//console.log(basket);
 
 // fonction pour vérifier l'état du panier pour apparition section panier vide ou section avec tableau et formulaire
 function checkBasket() {
     if (basket === null || basket.length === 0) { // soit basket n'a pas été créé dans le local storage soit il n'y a pas d'objet par ex si on a supprimé toutes les lignes
-        console.log("panier vide");
+        //console.log("panier vide");
         let commande = document.getElementById('commande');
         commande.setAttribute("class", "d-none"); // on fait disparaître le tableau et le formulaire
         let emptybasket = document.getElementById('emptybasket');
@@ -34,13 +34,13 @@ checkBasket();
 for (let i = 0; i < basket.length; i++) {
 
     let productDetailInBasket = basket[i]; // récupère le détail du produit en index 0
-    console.log(productDetailInBasket);
+    //console.log(productDetailInBasket);
 
     name = productDetailInBasket.name; // récupère le nom du produit en index i
     price = productDetailInBasket.price; // récupère le pric du produit en index i
     productID = productDetailInBasket.id; // récupère l'ID du produit en index i
     qtity = productDetailInBasket.quantity; // récupère la quantité du produit en index i
-    console.log(name, price, productID, qtity);
+    //console.log(name, price, productID, qtity);
 
 
     let tbody = document.getElementById('tbody');
@@ -114,7 +114,7 @@ for (let i = 0; i < basket.length; i++) {
     let suppr = tbody.getElementsByTagName('button'); // pour que cela ne sélectionne que les boutons de tbody
     let supprbtn = suppr[i];
     supprbtn.addEventListener('click', function () {
-        console.log(this.id); // récupère l'id du bouton qu'on a préalablement rempli avec avec productID concaténé à -delete
+        //console.log(this.id); // récupère l'id du bouton qu'on a préalablement rempli avec avec productID concaténé à -delete
         let iddelete = this.id.split("-")[0]; // récupère l'ID en prenant l'index O du tableau créé avec split 
         basket = basket.filter(x => x.id !== iddelete); // renvoit un tableau où on a enlevé l'objet qui contenait l'ID cliqué 
         let basket_json = JSON.stringify(basket); // transforme en texte l'array basket
@@ -139,7 +139,7 @@ function sumCalc() {
     });
     // fait la somme de chaque instance de l'array
     somme = presomme.reduce((a, b) => a + b, 0);
-    console.log("test montant de la commande" + somme);
+    //console.log("test montant de la commande" + somme);
     let total = document.getElementById("total");
     total.textContent = somme / 100 + " euros";
 };
@@ -173,12 +173,12 @@ const validEmail = function (inputEmail) {
 
     if (testEmail) {
         alertEmail.classList.add("d-none");
-        console.log("mail valide");
+        //console.log("mail valide");
         return true;
     }
     else {
         alertEmail.classList.remove("d-none");
-        console.log("mail invalide");
+        //console.log("mail invalide");
         return false;
     }
 };
@@ -204,12 +204,12 @@ const validPrenom = function (inputPrenom) {
 
     if (testprenom || inputPrenom.length < 2 || inputPrenom.length > 20) {
         alertPrenom.classList.remove("d-none");
-        console.log("prenom invalide");
+        //console.log("prenom invalide");
         return false;
     }
     else {
         alertPrenom.classList.add("d-none");
-        console.log("prenom valide");
+        //console.log("prenom valide");
         return true;
     }   
 };
@@ -237,12 +237,12 @@ const validNom = function (inputNom) {
 
     if (testnom || inputNom.length < 2 || inputNom.length > 30) {
         alertNom.classList.remove("d-none");
-        console.log("nom invalide");
+        //console.log("nom invalide");
         return false;
     }
     else {
         alertNom.classList.add("d-none");
-        console.log("nom valide");
+        //console.log("nom valide");
         return true;
     }
 
@@ -261,12 +261,12 @@ const validAdresse = function (inputAdresse) {
 
     if ( inputAdresse.length < 6 || inputAdresse.length > 100) {
         alertAdresse.classList.remove("d-none");
-        console.log("adresse invalide");
+        //console.log("adresse invalide");
         return false;
     }
     else {
         alertAdresse.classList.add("d-none");
-        console.log("adresse valide");
+        //console.log("adresse valide");
         return true;
     }
 
@@ -288,12 +288,12 @@ const validVille = function (inputVille) {
 
     if (testville || inputVille.length < 2 || inputVille.length > 30) {
         alertVille.classList.remove("d-none");
-        console.log("ville invalide");
+        //console.log("ville invalide");
         return false;
     }
     else {
         alertVille.classList.add("d-none");
-        console.log("ville valide");
+        //console.log("ville valide");
         return true;
     }
 
@@ -309,12 +309,12 @@ const validQtity = function (inputQtity) {
 
     if (testQtity) {
         alertqtity.classList.add("d-none");
-        console.log("quantité valide");
+        //console.log("quantité valide");
         return true;
     }
     else {
         alertqtity.classList.remove("d-none");
-        console.log("quantité invalide");
+        //console.log("quantité invalide");
         return false;
     }
 };
@@ -335,7 +335,7 @@ for (let i = 0; i < inputQtt.length; i++) {
     let testqtityresult = validQtity(inputQtt[i].value);
     arraytest.push(testqtityresult);
     };
-    console.log(arraytest);
+    //console.log(arraytest);
     if (arraytest.includes(false)) { // si le tableau contient "false", la condition est rempli. il faut que ca me renvoie faux pour ma validation
         return false;
     }
@@ -419,7 +419,6 @@ clickOrder.addEventListener('click', function (event) {
 let closeAlert = document.getElementById("closealert");
 
 closeAlert.addEventListener('click', function () {
-    console.log("test fermeture alerte");
     //ajoute la class d-none (=display:none) au message d'alerte
     let formAlert = document.getElementById("formalert");
     formAlert.classList.add("d-none");

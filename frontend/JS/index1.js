@@ -1,17 +1,38 @@
 // JavaScript source code
 
-// déclaration des variables utilisées dans la fonction cardCreate puis dans firstApiRequest
-let name;
-let price;
-let description;
-let image;
-let ID;
+
+let camera;
 
 
+// requête de l'API avec fetch 
+
+fetch("http://localhost:3000/api/cameras")
+    .then(function (reponse) {
+        //console.log(reponse);
+        //console.log("connexion réussie");
+        return reponse.json();
+    })
+
+    .then(function (reponse) {
+        let firstApiRequest = JSON.stringify(reponse); // transforme en texte 
+        return JSON.parse(firstApiRequest); // transforme en array javascript
+
+    })
+    .then(function (firstApiReponse) {
+        console.log(firstApiReponse);
+        //console.log(firstApiReponse.length);
+        // boucle qui répète autant de fois que la longueur de l'API // la boucle est bien répétée 5 fois 
+        firstApiReponse.forEach(cardCreate(camera));
+        })
+    .catch(function (error) {
+        console.log("erreur de chargement de l'API" + error);
+    })
 
 // fonction pour créer une Card 
-function cardCreate() {
-    
+function cardCreate(camera) {
+
+    console.log(camera.name); // affiche le nom du produit 
+
     // ajoute la première div à "card group" 
     let printCard = document.getElementById('cardGroup');
     let firstDiv = document.createElement("div");
@@ -25,7 +46,7 @@ function cardCreate() {
 
     // crée un élément img et ajoute attribut src / class / alt
     let img = document.createElement("img");
-    img.setAttribute("src", image);
+    img.setAttribute("src", camera.image);
     img.setAttribute("class", "card-img ");
     img.setAttribute("alt", "photo d'appareil photo")
     secondDiv.appendChild(img); // je crée à la deuxième div de cardGroup
@@ -42,7 +63,7 @@ function cardCreate() {
 
     // création de h2 enfant de cardTitle
     let h2 = document.createElement("h2");
-    h2.textContent = name;
+    h2.textContent = camera.name;
     cardTitle.appendChild(h2);
 
     // création du badge, enfant de cardTitle
@@ -53,13 +74,13 @@ function cardCreate() {
     // remplissage du badge avec un p et le prix
     let badgeInside = document.createElement("div");
     badgeInside.setAttribute("class", "h5 px-3");
-    badgeInside.textContent = price / 100 + " euros";
+    badgeInside.textContent = camera.price / 100 + " euros";
     badge.appendChild(badgeInside);
 
     // création de p, enfant de cardbody, rempli avec la description
     let descriptionCard = document.createElement("p");
     descriptionCard.setAttribute("class", "card-text");
-    descriptionCard.textContent = description;
+    descriptionCard.textContent = camera.description;
     cardBody.appendChild(descriptionCard);
 
     // création du bouton "voir le détail"
@@ -72,57 +93,10 @@ function cardCreate() {
     // ajouter les différents attributs au a
     a.setAttribute("class", "btn btn-success stretched-link");
     a.setAttribute("role", "button");
-    a.setAttribute("href", "produit.html?"+ ID); //lien vers page produit en ajoutant l'ID comme paramètre
+    a.setAttribute("href", "produit.html?" + camera.ID); //lien vers page produit en ajoutant l'ID comme paramètre
     a.textContent = "Voir plus"; // 
     // ajoute le <a> au bouton
-    btnDetail.appendChild(a);  
+    btnDetail.appendChild(a);
 };
 
 // fin de la fonction cardCreate
-
-// requête de l'API avec fetch 
-
-fetch("http://localhost:3000/api/cameras")
-    .then(function (reponse) {
-        //console.log(reponse);
-        //console.log("connexion réussie");
-        return reponse.json();
-    })
-
-    .then(function (reponse) {      
-        let firstApiRequest = JSON.stringify(reponse); // transforme en texte 
-        return  JSON.parse(firstApiRequest); // transforme en array javascript
-        
-    }) 
-    .then(function (firstApiReponse) {
-        //console.log(firstApiReponse);
-        //console.log(firstApiReponse.length);
-        // boucle qui répète autant de fois que la longueur de l'API // la boucle est bien répétée 5 fois 
-        for (let i = 0; i < firstApiReponse.length; i++) {
-            let productDetail = firstApiReponse[i]; // récupère le détail du produit en index i
-            name = productDetail.name; // récupère le nom du produit en index i
-            price = productDetail.price; // récupère le pric du produit en index i
-            description = productDetail.description; // récupère la description du produit en index i
-            image = productDetail.imageUrl; // récupère l'url du produit en index i
-            ID = productDetail._id; // récupère l'ID du produit en index i
-            //console.log(name); // affiche le nom du produit en index i
-
-            // lancer la fonction cardCreate
-            cardCreate();
-        }
-        
-    })
-    .catch(function (error) {
-        console.log("erreur de chargement de l'API" + error);
-    })
-
-
-
-
-
-
-
-
-
-
-
