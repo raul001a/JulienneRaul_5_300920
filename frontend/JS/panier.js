@@ -331,11 +331,12 @@ let inputQtt = document.getElementsByName("inputQtt");
 const testvalidquantity = function () {
     let arraytest = [];
     // crée un tableau où je renvoie le résultat true ou false du test validQtity pour chaque ligne
-for (let i = 0; i < inputQtt.length; i++) {
-    let testqtityresult = validQtity(inputQtt[i].value);
-    arraytest.push(testqtityresult);
-    };
-    //console.log(arraytest);
+    inputQtt.forEach(function (element) {
+        let testqtityresult = validQtity(element.value);
+        arraytest.push(testqtityresult);
+    }); 
+
+    // console.log(arraytest);
     if (arraytest.includes(false)) { // si le tableau contient "false", la condition est rempli. il faut que ca me renvoie faux pour ma validation
         return false;
     }
