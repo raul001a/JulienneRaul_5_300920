@@ -6,7 +6,7 @@ let price;
 let productID;
 let qtity;
 
-let basket = JSON.parse(localStorage.getItem("basket")); // récupère basket dans le localStorage et le transforme en JSON
+let basket = JSON.parse(localStorage.getItem("basket")); // récupère basket dans le localStorage et le transforme en array
 //console.log(basket);
 
 // fonction pour vérifier l'état du panier pour apparition section panier vide ou section avec tableau et formulaire
@@ -61,7 +61,7 @@ for (let i = 0; i < basket.length; i++) {
     inputQtity.setAttribute("class", "form-control btn-success");
     inputQtity.setAttribute("name", "inputQtt");
     inputQtity.setAttribute("type", "number");
-    inputQtity.setAttribute("ID", productID + "-qtity"); // à voir pour changer avec une concatenation productID qqchose cf. ID du button
+    inputQtity.setAttribute("ID", productID + "-qtity"); 
     inputQtity.setAttribute("min", "1");
     inputQtity.setAttribute("max", "99");
     inputQtity.setAttribute("value", qtity);
@@ -104,8 +104,8 @@ for (let i = 0; i < basket.length; i++) {
     tr.appendChild(col5);
     let button = document.createElement("button");
     button.setAttribute("class", "close");
-    button.setAttribute("ID", productID + "-delete"); // à voir pour changer avec une concatenation productID qqchose cf. ID du button
-    button.setAttribute("type", "button"); // les différents types de bouton
+    button.setAttribute("ID", productID + "-delete"); 
+    button.setAttribute("type", "button"); 
     button.innerHTML = "<span>&times;</span>";
     col5.appendChild(button);
 

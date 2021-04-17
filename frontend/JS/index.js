@@ -90,7 +90,7 @@ fetch("http://localhost:3000/api/cameras")
     })
 
     .then(function (reponse) {      
-        let firstApiRequest = JSON.stringify(reponse); // transforme en texte 
+        let firstApiRequest = JSON.stringify(reponse); // transforme en texte JSON 
         return  JSON.parse(firstApiRequest); // transforme en array javascript
         
     }) 

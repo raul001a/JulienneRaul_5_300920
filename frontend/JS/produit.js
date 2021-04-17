@@ -99,7 +99,7 @@ function addToLocalStorage() {
     }
     else {
         //console.log("panier existant");
-        basket = JSON.parse(localStorage.getItem("basket")); // récupère basket dans le localStorage et le transforme en JSON
+        basket = JSON.parse(localStorage.getItem("basket")); // récupère basket dans le localStorage et le transforme en array javascript
 
         // recherche de l'ID dans l'array
         let result = basket.find(x => x.id === productID); // renvoie l'objet contenant l'ID cherché    
