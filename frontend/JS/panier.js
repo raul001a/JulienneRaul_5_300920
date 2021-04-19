@@ -82,7 +82,7 @@ for (let i = 0; i < basket.length; i++) {
         localStorage.setItem("basket", basket_json); // le renvoie dans le localStorage
 
         //met à jour le prix total de la ligne
-        col4.textContent = (price / 100) * (inputQtity.value) + " euros";
+        col4.textContent = (result.price / 100) * (this.value) + " euros";
 
         //relance la fonction pour calculer le montant total de la commande
         sumCalc();
@@ -376,7 +376,7 @@ function sendOrder() {
     fetch("http://localhost:3000/api/cameras/order", {
         method: 'POST',
         body: JSON.stringify(order), // transforme order en JSON
-        headers: { 'Content-Type': 'application/json; charset=utf-8' }, // a demander 
+        headers: { 'Content-Type': 'application/json; charset=utf-8' }, 
     })
         .then(function (reponse) {
             return reponse.json();
